@@ -1,0 +1,353 @@
+#!/system/bin/sh
+
+# PARTITIONS LIST BY YASSINE
+
+echo -ne "    \r"
+sleep 0.01
+echo -ne "   S \r"
+sleep 0.01
+echo -ne "   Se \r"
+sleep 0.01
+echo -ne "   Sea \r"
+sleep 0.01
+echo -ne "   Sear \r"
+sleep 0.01
+echo -ne "   Searc \r"
+sleep 0.01
+echo -ne "   Search \r"
+sleep 0.01
+echo -ne "   Searchi \r"
+sleep 0.01
+echo -ne "   Searchin  \r"
+sleep 0.01
+echo -ne "   Searching  \r"
+sleep 0.01
+echo -ne "    earching  \r"
+sleep 0.01
+echo -ne "     arching  \r"
+sleep 0.01
+echo -ne "      rching  \r"
+sleep 0.01
+echo -ne "       ching  \r"
+sleep 0.01
+echo -ne "        hing  \r"
+sleep 0.01
+echo -ne "         ing  \r"
+sleep 0.01
+echo -ne "          ng  \r"
+sleep 0.01
+echo -ne "           g  \r"
+sleep 0.01
+echo -ne "             \r"
+sleep 0.01
+echo -ne "    \r"
+sleep 0.01
+echo -ne "   S \r"
+sleep 0.01
+echo -ne "   Se \r"
+sleep 0.01
+echo -ne "   Sea \r"
+sleep 0.01
+echo -ne "   Sear \r"
+sleep 0.01
+echo -ne "   Searc \r"
+sleep 0.01
+echo -ne "   Search \r"
+sleep 0.01
+echo -ne "   Searchi \r"
+sleep 0.01
+echo -ne "   Searchin  \r"
+sleep 0.01
+echo -ne "   Searching  \r"
+sleep 0.01
+echo -ne "    earching  \r"
+sleep 0.01
+echo -ne "     arching  \r"
+sleep 0.01
+echo -ne "      rching  \r"
+sleep 0.01
+echo -ne "       ching  \r"
+sleep 0.01
+echo -ne "        hing  \r"
+sleep 0.01
+echo -ne "         ing  \r"
+sleep 0.01
+echo -ne "          ng  \r"
+sleep 0.01
+echo -ne "           g  \r"
+sleep 0.01
+echo -ne "             \r"
+sleep 0.01
+echo -ne "    \r"
+sleep 0.01
+echo -ne "   S \r"
+sleep 0.01
+echo -ne "   Se \r"
+sleep 0.01
+echo -ne "   Sea \r"
+sleep 0.01
+echo -ne "   Sear \r"
+sleep 0.01
+echo -ne "   Searc \r"
+sleep 0.01
+echo -ne "   Search \r"
+sleep 0.01
+echo -ne "   Searchi \r"
+sleep 0.01
+echo -ne "   Searchin  \r"
+sleep 0.01
+echo -ne "   Searching  \r"
+sleep 0.01
+echo -ne "    earching  \r"
+sleep 0.01
+echo -ne "     arching  \r"
+sleep 0.01
+echo -ne "      rching  \r"
+sleep 0.01
+echo -ne "       ching  \r"
+sleep 0.01
+echo -ne "        hing  \r"
+sleep 0.01
+echo -ne "         ing  \r"
+sleep 0.01
+echo -ne "          ng  \r"
+sleep 0.01
+echo -ne "           g  \r"
+sleep 0.01
+echo -ne "             \r"
+sleep 0.01
+P_LIST(){
+A() {
+  B=$(cat /proc/mounts | grep -o /dev/block/*/*/*/*/by-name/ || cat /proc/mounts | grep -o /dev/block/*/*/*/by-name/ || cat /proc/mounts | grep -o /dev/block/*/*/by-name/ || cat /proc/mounts | grep -o /dev/block/*/by-name/ || cat /proc/mounts | grep -o /dev/block/by-name/);
+  if [ ! -z "${B}" ]; then
+C=$(echo -e "\v$B");
+  fi;
+list=(
+$C
+)
+for path in ${list[@]};do
+	if [[ -e "$path" ]];then
+	D=$(echo $path)
+fi
+done;
+}
+b_dir="/sdcard/plist/backup"
+r_dir="/sdcard/plist/restore"
+if [ ! -d "$b_dir" ]; then
+mkdir /sdcard/plist
+mkdir /sdcard/plist/backup
+mkdir /sdcard/plist/restore
+fi
+for E in *; do
+A
+  if [ ! -z "${D}" ]; then
+cd $D
+F=$(find -type l | sed 's!./!!')
+set -- $F
+if [ ! -z "$F" ]; then
+            sleep 0.001;
+            echo
+            echo
+            echo "          PARTITIONS LIST "
+            sleep 0.02;
+echo
+echo " Select a partition to backup or restore :"
+echo
+sleep 0.1
+select menu in $F "Exit"; do
+case $REPLY in
+    [1-9]|[1-9][0-9]) i="$#"
+                      let i=i+1
+                      G=$(echo "$@" | cut -d' ' -f"$REPLY")
+         if [ ! -z "$G" -a "$REPLY" -lt "$i" ]; then
+                  if [ ! -z "$(echo "$G" | grep -o 'userdata')" ]; then
+         sleep 0.02
+             echo
+             echo 
+             echo "  ERROR "
+             echo 
+             sleep 0.02
+             echo " You can't backup or restore \"$G\" partition ! "
+             sleep 4
+         P_LIST
+         return
+         else
+back_rest(){
+            sleep 0.001;
+            echo
+            echo
+            sleep 0.02;
+echo
+echo " Choose an option for \"$G\" partition : "
+echo
+echo
+select img in "Backup" "Restore" "Cancel"; do
+case $REPLY in 
+         1 ) echo
+echo 
+echo "  Backing up $G ... "
+echo 
+sleep 0.4
+echo "  $G path "
+sleep 0.3
+echo "  $D$G "
+echo
+sleep 1
+         dd if=$G of=$b_dir/"$G".img 2> /dev/null
+         if [ $(echo $?) -eq 0 ] ; then
+echo
+echo 
+echo "  BACKUP SUCCEEDED "
+echo 
+sleep 0.9
+echo "  "$G".img saved to $b_dir "
+echo
+sleep 4
+P_LIST
+         return
+         break 
+else
+echo
+echo 
+echo "  BACKUP FAILED "
+echo 
+sleep 0.9
+echo "  backup directory not found ! "
+sleep 4
+P_LIST
+fi
+break ;;
+         2 ) echo
+         if [ ! -z "$(echo "$G" | grep -o 'system' || echo "$G" | grep -o 'vendor' || echo "$G" | grep -o 'factory' || echo "$G" | grep -o 'oem' || echo "$G" | grep -o 'cust')" ]; then
+             sleep 0.02
+             echo 
+             echo "  ERROR "
+             echo 
+             sleep 0.02
+             echo "  is not safe to restore \"$G\" partition when system is running ! "
+             sleep 4
+         P_LIST
+         return
+         else
+                      echo
+echo 
+echo "  Restoring $G ... "
+echo 
+sleep 0.4
+echo "  $G path "
+sleep 0.1
+echo "  $D$G "
+echo
+sleep 0.5
+         dd if=$r_dir/"$G".img of=$G 2> /dev/null
+         if [ $(echo $?) -eq 0 ] ; then
+echo
+echo 
+echo "  RESTORE SUCCEEDED "
+echo 
+sleep 0.9
+echo "  "$G" partition restored from $r_dir/"$G".img "
+echo
+sleep 4
+P_LIST
+         return
+         break 
+else
+echo
+echo 
+echo "  FAILED TO RESTORE \"$G\" "
+echo 
+sleep 0.9
+echo "  file not fount in restore directory ! "
+echo
+sleep 0.9
+echo "  put "$G".img in $r_dir "
+sleep 4
+P_LIST
+fi
+fi
+break ;;
+         3 ) echo
+             P_LIST
+             break ;;
+         * ) echo
+             echo 
+             echo "  INVALID ENTERY "
+             echo 
+             sleep 0.02
+             echo "  enter a number corresponding to menu items "
+             sleep 4
+             back_rest
+             break ;;
+    esac
+done
+return
+}
+back_rest
+fi
+         P_LIST
+         return
+         break
+         elif [ "$REPLY" == "$i" ]; then
+        exit
+        return
+        break
+        else
+             echo
+             echo 
+             echo "  INVALID ENTERY "
+             echo 
+             sleep 0.02
+             echo "  enter a number corresponding to menu items "
+             sleep 4
+         P_LIST
+         return
+         break
+         fi
+         break;;
+      *) echo
+             echo 
+             echo "  INVALID ENTERY "
+             echo 
+             sleep 0.02
+             echo "  enter a number corresponding to menu items "
+             sleep 4
+         P_LIST
+         return
+         break;;
+  esac
+ done
+ else
+echo
+echo 
+echo "  FAILED "
+echo 
+sleep 0.9
+echo "  Device paths not found "
+sleep 0.3
+echo "  this is a beta feature "
+sleep 0.3
+echo "  can not support all devices ! "
+sleep 6
+ exit
+ return
+ fi
+else
+echo
+echo 
+echo "  FAILED "
+echo 
+sleep 0.9
+echo "  Device paths not found "
+sleep 0.3
+echo "  this is a beta feature "
+sleep 0.3
+echo "  can not support all devices ! "
+sleep 6
+ exit
+break;
+  fi;
+done;
+return
+}
+ P_LIST
